@@ -1,0 +1,25 @@
+sudo: required
+services:
+  - docker
+
+before_install
+  - docker build -t tomermanish/react-test -f ./client/Dockerfile.dev ./client
+
+scripts:
+  - docker run tomermanish/react-test npm test -- --coverage --watchAll=false
+
+after_success:
+  - docker build -t tomermanish/multi-client ./client
+  - docker build -t tomermanish/multi-nginx ./nginx
+  - docker build -t tomermanish/multi-server ./server 
+  - docker build -t tomermanish/multi-worker ./worker
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
+
+  - docker push tomermanish/multi-client
+  - docker push tomermanish/multi-nginx
+  - docker push tomermanish/multi-server
+  - docker push tomermanish/multi-worker
+
+
+
