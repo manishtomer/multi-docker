@@ -10,7 +10,7 @@ services:
 before_install:
   - docker build -t tomermanish/react-test -f ./client/Dockerfile.dev ./client
 
-scripts:
+script:
   - docker run tomermanish/react-test npm run test -- --coverage --watchAll=false
 
 after_success:
