@@ -19,7 +19,7 @@ after_success:
   - docker build -t tomermanish/multi-server ./server 
   - docker build -t tomermanish/multi-worker ./worker
 
-  - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
+  - docker -u "$DOCKER_ID" -p "$DOCKER_PASSWORD"
 
   - docker push tomermanish/multi-client
   - docker push tomermanish/multi-nginx
