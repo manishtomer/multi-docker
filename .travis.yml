@@ -26,5 +26,18 @@ after_success:
   - docker push tomermanish/multi-server
   - docker push tomermanish/multi-worker
 
+deploy:
+  provider: elasticbeanstalk
+  region: us-east-2
+  app: multi-docker
+  env: MultiDocker-env
+  bucket_name: elasticbeanstalk-us-east-2-630978305043
+  bucket_path: docker_multi
+  on: 
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
+
 
 
